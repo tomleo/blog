@@ -1,0 +1,12 @@
+PyYAML
+Jinja2
+Markdown
+# pip-tools
+black
+flake8
+mypy
+isort
+Pygments
+pymdown-extensions
+pyembed-markdown
+pytest

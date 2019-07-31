@@ -1,0 +1,7 @@
+build/**/*.html
+venv/
+__pycache__/
+*.sublime-workspace
+*.pyc
+*.cpython-37.pyc
+content/**/*.md
