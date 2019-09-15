@@ -17,6 +17,7 @@ Options:
 """
 
 import os
+import sys
 from docopt import docopt
 
 # Not Sure why mypy complains about missing attributes on __main__.blog
@@ -50,7 +51,10 @@ if __name__ == "__main__":
         build(src_dir=src_dir, dest_dir=dest_dir)
     elif command == COMMAND_CLEAN:
         dest_dir = os.path.abspath(arguments[DESTINATION])
-        clean(dest_dir=dest_dir)
+        try:
+            clean(dest_dir=dest_dir)
+        except Exception as exp:
+            sys.stderr.write(str(exp))
     elif command == COMMAND_SERVE:
         dest_dir = os.path.abspath(arguments[DESTINATION])
         serve(dest_dir=dest_dir)

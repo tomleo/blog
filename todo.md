@@ -1,12 +1,13 @@
 # Todos
 
-- [ ] Render more meta data to the template
 - [ ] Add basic styling to pages
 - [ ] Add breadcrumb navigation (generate based on path)
-- [x] Add clean command for the build folder
+- [ ] Render more meta data to the template
 - [ ] Skip rendering HTML for markdown files without content
+- [x] Add clean command for the build folder
 - [ ] Private doc integration
 - [ ] Roll up pages
+- [ ] Generate `<name>.html` `<name>-body.json`
 
 ## Private doc integration
 
@@ -23,3 +24,33 @@ List each category with links to the HTML files
 ## Reading metrics
 
 List what was read in order by timestamp (include markdown files without content)
+
+## Generate `<name>.html` `<name>.json`
+
+*foo.md*
+```markdown
+# Test
+
+This is a test
+```
+
+*foo.html*
+```html
+<html>
+<head><!-- ... --></head>
+<body>
+    <h1>Test</h1>
+    <p>This is a test</p>
+</body>
+</html>
+```
+
+*foo.json*
+```json
+{
+    'head-append': [
+        '<link rel="stylesheet" type="text/css" href="link-to-page-style.css" />'
+    ],
+    'body': '<h1>Test</h1><p>This is a test</p>'
+}
+```

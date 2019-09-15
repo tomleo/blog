@@ -4,8 +4,9 @@ import yaml
 import http.server
 import socketserver
 from datetime import datetime
-from typing import Generator
+from typing import Generator, List
 import markdown
+from collections import namedtuple
 
 from trello.view import get_trello_board_dict_from_json, get_cards_in_list
 from trello.model import TrelloCard
@@ -156,16 +157,44 @@ def serve(dest_dir: str) -> None:
     httpd.serve_forever()
 
 
+FolderMeta = namedtuple('FolderMeta', ['dir_path', 'files', 'has_dirs'])
+
+
+def _get_tail_nodes_in_folder(dest_dir) -> List[FolderMeta]:
+    """
+    Traverse through a folder and return only FolderMeta
+    of files without child folders
+    """
+    folders = []
+    for root, dirs, files in os.walk(dest_dir):
+        folders.append(
+            FolderMeta(
+                dir_path=root,
+                files=[os.path.join(root, file) for file in files],
+                has_dirs=bool(len(dirs))))
+    return [i for i in folders if not i.has_dirs]
+
+
 def clean(dest_dir: str) -> None:
-    _dest_dir = "./" + dest_dir
-    for root, dirs, files in os.walk(_dest_dir):
-        if files:
-            for file in files:
-                file_path = os.path.join(root, file)
-                if file_path.endswith(".keep"):
+    """
+    1. Traverse through folder finding folders without child folders
+    2. Delete "tail" folders and their files
+    3. Repeat until all "child" folders of "dest_dir" are deleted
+
+    If _get_tail_nodes_in_folder is called 100 times print error message
+    """
+    for i in range(100):
+        folders_to_delete = _get_tail_nodes_in_folder(dest_dir)
+        if not folders_to_delete:
+            return
+        for folder in folders_to_delete:
+            if folder.dir_path == dest_dir:
+                return
+            for file in folder.files:
+                if ".keep" in file:
                     continue
-                os.remove(file_path)
-        try:
-            os.removedirs(root)
-        except OSError:
-            pass
+                os.remove(file)
+            if ".keep" not in [os.path.basename(f) for f in folder.files]:
+                os.removedirs(folder.dir_path)
+    else:
+        raise Exception("Too many sub-folder levels")
