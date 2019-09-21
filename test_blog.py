@@ -10,7 +10,8 @@ BUILD_DIR_NAME = 'build'
 def content_directory(tmpdir):
     test_content_dir = os.path.join(
         os.path.dirname(os.path.abspath(__file__)),
-        'test_content')
+        'test_content',
+        'content')
     current_dir = str(tmpdir)
     copy_test_dir_process = Popen("rsync -avu %s/ %s" % (test_content_dir, current_dir),
                                   shell=True)

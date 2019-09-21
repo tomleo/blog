@@ -1,3 +1,8 @@
+---
+categories: [test]
+tags: [python, test]
+---
+
 # Foo Blog
 
 This is a foo blog [some text](www.example.com)
