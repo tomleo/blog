@@ -53,3 +53,4 @@ def test_build(content_directory):
     build_process = Popen(build_command_str, shell=True)
     std_out, std_err = build_process.communicate()
     assert len(os.listdir(build_dir)) > 1
+    # TODO: more comprehensive tests against output

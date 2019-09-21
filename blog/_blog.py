@@ -7,7 +7,7 @@ from typing import Generator, List
 import markdown
 from collections import namedtuple
 import logging
-from jinja2 import Environment, PackageLoader
+from jinja2 import Environment, FileSystemLoader
 
 from .utils import mkdirp
 from .meta_files.model import (
@@ -17,10 +17,14 @@ from .meta_files.model import (
     Md,
 )
 
+template_path = os.path.join(
+    os.path.dirname(__file__),
+    'theme',
+    'templates',
+)
+template_loader = FileSystemLoader([template_path])
 
-# select_autoescape,
-
-env = Environment(loader=PackageLoader("blog", "theme", "templates"))
+env = Environment(loader=template_loader)
 # autoescape=select_autoescape(['html'])
 
 
