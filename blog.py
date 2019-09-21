@@ -101,14 +101,22 @@ def generate_html_from_markdown_file(
     file_context = parse_markdown_file(file_path)
     if not file_context.content.content:
         return
+
     html_content = file_context_to_html(file_context)
-    rel_path_pattern = r"\.\/?" + source_dir + r"\/"
-    rel_path = re.sub(rel_path_pattern, "", os.path.dirname(file_path))
-    rel_name = re.sub(r"\.md$", ".html", os.path.basename(file_path))
-    build_dir_name = "./" + dest_dir
-    build_dir = os.path.join(build_dir_name, rel_path)
-    mkdirp(build_dir)
-    build_path = os.path.join(build_dir, rel_name)
+    relative_folder_path = os.path.dirname(file_path)[len(source_dir):]
+    if relative_folder_path:
+        if relative_folder_path.startswith('/'):
+            relative_folder_path = relative_folder_path[1:]
+        if relative_folder_path[-1] != '/':
+            relative_folder_path = relative_folder_path + '/'
+
+    output_file_name = re.sub(r"\.md$", ".html", os.path.basename(file_path))
+    output_file_folder = os.path.join(dest_dir, relative_folder_path)
+    mkdirp(output_file_folder)
+    build_path = os.path.join(
+        output_file_folder,
+        output_file_name
+    )
     with open(build_path, "wb") as fout:
         fout.write(html_content.encode("utf-8"))
 
