@@ -7,6 +7,7 @@ from datetime import datetime
 from typing import Generator, List
 import markdown
 from collections import namedtuple
+import logging
 
 from trello.view import get_trello_board_dict_from_json, get_cards_in_list
 from trello.model import TrelloCard
@@ -18,6 +19,16 @@ from jinja2 import Environment, PackageLoader
 
 env = Environment(loader=PackageLoader("theme", "templates"))
 # autoescape=select_autoescape(['html'])
+
+
+logger = logging.getLogger('basicLogger')
+logger.setLevel(logging.DEBUG)
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.DEBUG)
+console_handler.setFormatter(
+    logging.Formatter('%(message)s')
+)
+logger.addHandler(console_handler)
 
 default_markdown_parser = markdown.Markdown(
     extensions=[
