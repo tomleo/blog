@@ -9,6 +9,14 @@
 - [ ] Roll up pages
 - [ ] Generate `<name>.html` `<name>-body.json`
 
+## Naming Project
+
+SatGen
+YASG
+Static Simple
+Markdown Pub
+
+
 ## Private doc integration
 
 Integrate with django private docs project?

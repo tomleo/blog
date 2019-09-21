@@ -1,9 +1,10 @@
 import os
 import yaml
 from datetime import datetime
-from trello.view import get_trello_board_dict_from_json, get_cards_in_list
-from trello.model import TrelloCard
-from utils import mkdirp, slugify
+
+from .trello.view import get_trello_board_dict_from_json, get_cards_in_list
+from .trello.model import TrelloCard
+from .utils import mkdirp, slugify
 
 
 def create_markdown_file_from_trello_card(

@@ -23,3 +23,6 @@ To see the results locally do the following:
 **Need something more complex?**
 
 - Consider using Hugo, Gatsby, Django, writing your own server
+
+Package Structure based on:
+https://github.com/pypa/sampleproject

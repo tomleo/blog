@@ -22,12 +22,12 @@ from docopt import docopt
 
 # Not Sure why mypy complains about missing attributes on __main__.blog
 # for now ignoring mypy lint errors
-from blog import (  # type: ignore
+from ._blog import (  # type: ignore
     serve,
     build,
     clean,
 )
-from trello_to_markdown import (
+from .trello_to_markdown import (
     trello_json_export_to_markdown_files,
 )
 

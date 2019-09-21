@@ -7,13 +7,20 @@ from typing import Generator, List
 import markdown
 from collections import namedtuple
 import logging
-from utils import mkdirp
-from meta_files.model import FileContext, FileContextBody, FileContextMeta, Md
 from jinja2 import Environment, PackageLoader
+
+from .utils import mkdirp
+from .meta_files.model import (
+    FileContext,
+    FileContextBody,
+    FileContextMeta,
+    Md,
+)
+
 
 # select_autoescape,
 
-env = Environment(loader=PackageLoader("theme", "templates"))
+env = Environment(loader=PackageLoader("blog", "theme", "templates"))
 # autoescape=select_autoescape(['html'])
 
 
