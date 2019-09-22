@@ -1,4 +1,5 @@
 import os
+import re
 from setuptools import setup, find_packages
 
 here = os.path.abspath(os.path.dirname(__file__))
@@ -10,10 +11,10 @@ VERSION = ''
 version_file = os.path.join(
     here,
     'blog',
-    'version'
+    'version.py'
 )
 with open(version_file, 'r', encoding='utf-8') as fin:
-    VERSION = fin.read().strip()
+    VERSION = re.sub(r'"', '', fin.read().strip())
 
 setup(
     name='blog',

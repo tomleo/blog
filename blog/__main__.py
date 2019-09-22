@@ -17,6 +17,7 @@ Options:
 """
 
 import os
+import re
 import sys
 from docopt import docopt
 
@@ -47,10 +48,10 @@ def get_command(arguments: dict) -> str:
 VERSION = ''
 version_file = os.path.join(
     os.path.abspath(os.path.dirname(__file__)),
-    'version'
+    'version.py'
 )
 with open(version_file, 'r', encoding='utf-8') as fin:
-    VERSION = fin.read().strip()
+    VERSION = re.sub(r'"', '', fin.read().strip())
 
 
 if __name__ == "__main__":
