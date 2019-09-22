@@ -6,9 +6,18 @@ here = os.path.abspath(os.path.dirname(__file__))
 with open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
+VERSION = ''
+version_file = os.path.join(
+    here,
+    'blog',
+    'version'
+)
+with open(version_file, 'r', encoding='utf-8') as fin:
+    VERSION = fin.read().strip()
+
 setup(
     name='blog',
-    version='0.1.0',
+    version=VERSION,
     description='A static website generator',
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -37,6 +46,9 @@ setup(
     # Top level requires are defined in requirements.in
     # Resolved minimum versions are the result of pip-compile with py3.7
     # It's possible older versions of these libraries would be compatible
+    setup_requires=[
+        'wheel'
+    ],
     install_requires=[
         'PyYAML>=5.1.*',
         'Jinja2>=2.10.*',

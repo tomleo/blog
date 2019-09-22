@@ -8,3 +8,5 @@ content/**/*.md
 *.egg-info
 data/build/
 dist/*
+.eggs/
+build/

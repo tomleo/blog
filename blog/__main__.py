@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
-"""pystatic
+"""blog
 
 Usage:
-  pystatic build <src> <dest>
-  pystatic clean <dest>
-  pystatic serve <dest>
-  pystatic trello <json_file> <list_name> [--write]
-  pystatic (-h | --help)
-  pystatic (-v | --version)
+  blog build <src> <dest>
+  blog clean <dest>
+  blog serve <dest>
+  blog trello <json_file> <list_name> [--write]
+  blog (-h | --help)
+  blog (-v | --version)
 
 Options:
   -h --help     Show this screen.
@@ -44,8 +44,17 @@ def get_command(arguments: dict) -> str:
     return next((k for k, v in arguments.items() if v and k in commands))
 
 
+VERSION = ''
+version_file = os.path.join(
+    os.path.abspath(os.path.dirname(__file__)),
+    'version'
+)
+with open(version_file, 'r', encoding='utf-8') as fin:
+    VERSION = fin.read().strip()
+
+
 if __name__ == "__main__":
-    arguments = docopt(__doc__, version='pystatic 1.0')
+    arguments = docopt(__doc__, version=f'blog {VERSION}')
     command = get_command(arguments)
     if command == COMMAND_BUILD:
         src_dir = os.path.abspath(arguments[SOURCE])
