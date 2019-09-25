@@ -5,3 +5,8 @@ __pycache__/
 *.pyc
 *.cpython-37.pyc
 content/**/*.md
+*.egg-info
+data/build/
+dist/*
+.eggs/
+build/

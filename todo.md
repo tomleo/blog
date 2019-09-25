@@ -8,6 +8,7 @@
 - [ ] Skip rendering HTML for markdown files without content
 - [ ] Private doc integration
 - [ ] Roll up pages
+- [ ] Generate `<name>.html` `<name>-body.json`
 - [ ] If no metadata for title, extract h1 (i.e. `#`) from file and use that
 - [ ] If no metadata for lastmod, get last modified from physical file
 
@@ -116,3 +117,33 @@ List each category with links to the HTML files
 ### Reading metrics
 
 List what was read in order by timestamp (include markdown files without content)
+
+## Generate `<name>.html` `<name>.json`
+
+*foo.md*
+```markdown
+# Test
+
+This is a test
+```
+
+*foo.html*
+```html
+<html>
+<head><!-- ... --></head>
+<body>
+    <h1>Test</h1>
+    <p>This is a test</p>
+</body>
+</html>
+```
+
+*foo.json*
+```json
+{
+    'head-append': [
+        '<link rel="stylesheet" type="text/css" href="link-to-page-style.css" />'
+    ],
+    'body': '<h1>Test</h1><p>This is a test</p>'
+}
+```

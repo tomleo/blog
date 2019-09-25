@@ -11,3 +11,4 @@ pymdown-extensions
 pyembed-markdown
 pytest
 pytest-cov
+docopt
