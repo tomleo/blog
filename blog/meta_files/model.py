@@ -1,3 +1,4 @@
+import os
 import dataclasses
 from typing import NamedTuple
 
@@ -59,3 +60,19 @@ class FileContext:
 class Md(NamedTuple):
     yaml_meta: str
     markdown_content: str
+
+
+@dataclasses.dataclass
+class DestFile:
+    """
+    Keep track of filename and folder
+    """
+    dest_file_name: str
+    dest_file_folder: str
+
+    @property
+    def dest_file_path(self) -> str:
+        return os.path.join(
+            self.dest_file_folder,
+            self.dest_file_name
+        )

@@ -4,17 +4,20 @@ import yaml
 import http.server
 import socketserver
 from typing import Generator, List
+from shutil import copyfile
+
 import markdown
 from collections import namedtuple
 import logging
 from jinja2 import Environment, FileSystemLoader
 
-from .utils import mkdirp
-from .meta_files.model import (
+from utils import mkdirp
+from meta_files.model import (
     FileContext,
     FileContextBody,
     FileContextMeta,
     Md,
+    DestFile,
 )
 
 template_path = os.path.join(
@@ -102,14 +105,7 @@ def file_context_to_html(context: FileContext) -> str:
     return template.render(context.get_context())
 
 
-def generate_html_from_markdown_file(
-    file_path: str, source_dir: str, dest_dir: str
-) -> None:
-    file_context = parse_markdown_file(file_path)
-    if not file_context.content.content:
-        return
-
-    html_content = file_context_to_html(file_context)
+def get_full_dest_file_path(file_path: str, source_dir: str, dest_dir: str) -> DestFile:
     relative_folder_path = os.path.dirname(file_path)[len(source_dir):]
     if relative_folder_path:
         if relative_folder_path.startswith('/'):
@@ -117,20 +113,44 @@ def generate_html_from_markdown_file(
         if relative_folder_path[-1] != '/':
             relative_folder_path = relative_folder_path + '/'
 
-    output_file_name = re.sub(r"\.md$", ".html", os.path.basename(file_path))
+    output_file_name = os.path.basename(file_path)
+    if os.path.splitext(file_path)[1] == '.md':
+        output_file_name = re.sub(r"\.md$", ".html", output_file_name)
     output_file_folder = os.path.join(dest_dir, relative_folder_path)
-    mkdirp(output_file_folder)
-    build_path = os.path.join(
-        output_file_folder,
-        output_file_name
+    return DestFile(
+        dest_file_name=output_file_name,
+        dest_file_folder=output_file_folder
     )
-    with open(build_path, "wb") as fout:
-        fout.write(html_content.encode("utf-8"))
+
+
+def generate_html_from_markdown_file(
+    file_path: str, source_dir: str, dest_dir: str
+) -> str:
+    file_context = parse_markdown_file(file_path)
+    if not file_context.content.content:
+        raise Exception("Markdown file missing content")
+    html_content = file_context_to_html(file_context)
+    return html_content
 
 
 def build(src_dir: str, dest_dir: str) -> None:
     for file_path in traverse_files_in_path(src_dir):
-        generate_html_from_markdown_file(file_path, src_dir, dest_dir)
+        extension = os.path.splitext(file_path)[1]
+        html_content = None
+        dest_file = get_full_dest_file_path(file_path, src_dir, dest_dir)
+        if extension == '.md':
+            try:
+                html_content = generate_html_from_markdown_file(file_path, src_dir, dest_dir)
+            except Exception as exp:
+                print(f"{file_path} {str(exp)}")
+                continue
+
+        mkdirp(dest_file.dest_file_folder)
+        if html_content:
+            with open(dest_file.dest_file_path, "wb") as fout:
+                fout.write(html_content.encode("utf-8"))
+        else:
+            copyfile(file_path, dest_file.dest_file_path)
 
 
 def serve(dest_dir: str) -> None:
