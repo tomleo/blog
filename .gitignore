@@ -9,4 +9,6 @@ content/**/*.md
 data/build/
 dist/*
 .eggs/
-build/
+*.swp
+.coverage
+
