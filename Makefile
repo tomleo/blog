@@ -13,3 +13,9 @@ update:
 	pip-compile -o requirements.txt requirements.in
 
 .PHONY: update
+
+test:
+	pytest --cov=blog tests/
+	coverage html
+
+.PHONY: test

@@ -7,7 +7,6 @@ from typing import Generator, List
 from shutil import copyfile
 
 import markdown
-from collections import namedtuple
 import logging
 from jinja2 import Environment, FileSystemLoader
 
@@ -18,6 +17,7 @@ from meta_files.model import (
     FileContextMeta,
     Md,
     DestFile,
+    FolderMeta,
 )
 
 template_path = os.path.join(
@@ -162,9 +162,6 @@ def serve(dest_dir: str) -> None:
     httpd = socketserver.TCPServer(("127.0.0.1", PORT), Handler)
     print(f"serving http://{LOCALHOST}:{PORT}")
     httpd.serve_forever()
-
-
-FolderMeta = namedtuple('FolderMeta', ['dir_path', 'files', 'has_dirs'])
 
 
 def _get_tail_nodes_in_folder(dest_dir) -> List[FolderMeta]:

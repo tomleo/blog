@@ -76,3 +76,9 @@ class DestFile:
             self.dest_file_folder,
             self.dest_file_name
         )
+
+
+class FolderMeta(NamedTuple):
+    dir_path: str
+    files: str
+    has_dirs: str  # TODO: should this be a bool?
