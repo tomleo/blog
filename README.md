@@ -9,8 +9,8 @@ Markdown In -> HTML Out
 
 ---
 
-[![PyPI](hhttps://img.shields.io/pypi/v/blog.svg)](https://pypi.python.org/pypi/blog)
-[![PyPI](hhttps://img.shields.io/pypi/dm/blog.svg)](https://pypi.python.org/pypi/blog)
+[![PyPI](https://img.shields.io/pypi/v/blog.svg)](https://pypi.python.org/pypi/blog)
+[![PyPI](https://img.shields.io/pypi/dm/blog.svg)](https://pypi.python.org/pypi/blog)
 
 ---
 

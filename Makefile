@@ -1,10 +1,10 @@
 build:
 	python setup.py sdist bdist_wheel
 
-.PHONY: sdist
+.PHONY: build
 
 upload:
-	twine upload --skip-existing dist/*
+	twine upload --skip-existing -s -i tomjleo@gmail.com dist/*
 
 .PHONY: upload
 
